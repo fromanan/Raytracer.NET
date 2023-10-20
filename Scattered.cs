@@ -1,8 +1,10 @@
+using System.Numerics;
+
 namespace Raytracer
 {
-    public record Scattered(Color Attenuation, Ray Ray, bool DidScatter)
+    public record Scattered(Vector3 Attenuation, Ray Ray, bool DidScatter)
     {
-        public Color Attenuation { get; } = Attenuation;
+        public Vector3 Attenuation { get; } = Attenuation;
         public Ray Ray { get; } = Ray;
         public bool DidScatter { get; } = DidScatter;
     }

@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Drawing;
+using System.Numerics;
 
 namespace Raytracer
 {
@@ -14,9 +15,9 @@ namespace Raytracer
             DoWork += DoRenderWork;
         }
 
-        private void DoRenderWork(object sender, DoWorkEventArgs args)
+        private void DoRenderWork(object? sender, DoWorkEventArgs args)
         {
-            args.Result = RenderFrame((RenderArgs) args.Argument);
+            args.Result = RenderFrame((RenderArgs) args.Argument!);
         }
         
         public Bitmap? RenderFrame(RenderArgs args)
@@ -35,14 +36,14 @@ namespace Raytracer
                 int x = i % width;
                 int y = i / width;
 
-                Color color = Renderer.Raycast(args.Camera, new Rectangle(x, y, width, height));
+                Vector3 color = Renderer.Raycast(args.Camera, new Rectangle(x, y, width, height));
                 
-                frame.SetPixel(x, y, color.SystemColor);
+                frame.SetPixel(x, y, color.SystemColor());
 
                 if (x == 0)
                 {
                     CurrentRender = frame.Clone() as Bitmap;
-                    ReportProgress((int)(i / (double) numPixels * 100.0));
+                    ReportProgress((int)(i / (float) numPixels * 100));
                 }
             }
 

@@ -1,4 +1,5 @@
 using System;
+using System.Numerics;
 
 namespace Raytracer
 {
@@ -11,43 +12,32 @@ namespace Raytracer
         private readonly Vector3 _w;
         private readonly Vector3 _u;
         private readonly Vector3 _v;
-        private readonly double _lensRadius;
+        private readonly float _lensRadius;
 
-        public Camera(Vector3 lookFrom, Vector3 lookAt, Vector3 vup, double verticalFov, double aspectRatio, double aperture,
-            double focalDistance)
+        public Camera(Vector3 lookFrom, Vector3 lookAt, Vector3 vup, float verticalFov, float aspectRatio, float aperture,
+            float focalDistance)
         {
-            double theta = verticalFov * Math.PI / 180.0;
-            double viewportHeight = 2.0 * Math.Tan(theta / 2.0);
-            double viewportWidth = viewportHeight * aspectRatio;
+            float theta = verticalFov * MathF.PI / 180f;
+            float viewportHeight = 2f * MathF.Tan(theta / 2f);
+            float viewportWidth = viewportHeight * aspectRatio;
 
-            _w = lookFrom.Diff(lookAt).Normalized;
-            _u = vup.Cross(_w).Normalized;
+            _w = (lookFrom - lookAt).Normalized();
+            _u = vup.Cross(_w).Normalized();
             _v = _w.Cross(_u);
 
             _origin = lookFrom;
-            _horizontal = _u.Mult(viewportWidth * focalDistance);
-            _vertical = _v.Mult(viewportHeight * focalDistance);
-            _corner = _origin
-                .Diff(_horizontal.Div(2.0))
-                .Diff(_vertical.Div(2.0))
-                .Diff(_w.Mult(focalDistance));
-
-            _lensRadius = aperture / 2.0;
+            _horizontal = _u * (viewportWidth * focalDistance);
+            _vertical = _v * (viewportHeight * focalDistance);
+            _corner = _origin - _horizontal / 2f - _vertical / 2f - _w * focalDistance;
+            _lensRadius = aperture / 2f;
         }
 
-        public Ray GetRay(double start, double end)
+        public Ray GetRay(float start, float end)
         {
-            Vector3 radius = Vector3.RandomInUnitCircle().Mult(_lensRadius);
-            Vector3 offset = _u
-                .Mult(radius.X)
-                .Sum(_v.Mult(radius.Y));
-            Vector3 direction = _corner
-                .Sum(_horizontal.Mult(start))
-                .Sum(_vertical.Mult(end))
-                .Diff(_origin)
-                .Diff(offset);
-
-            return new Ray(_origin.Sum(offset), direction);
+            Vector3 radius = VectorUtils.RandomInUnitCircle() * _lensRadius;
+            Vector3 offset = _u * radius.X + _v * radius.Y;
+            Vector3 direction = _corner + _horizontal * start + _vertical * end - _origin - offset;
+            return new Ray(_origin + offset, direction);
         }
     }
 }

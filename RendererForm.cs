@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Numerics;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
@@ -13,11 +14,11 @@ namespace Raytracer
    {
       // [x] Image resolution; higher gives better quality but slower render time
       // There's no point to it being bigger than the window's resolution 
-      private double AspectRatio => (double)Width / Height;
+      private float AspectRatio => (float)Width / Height;
 
       private int RenderHeight => Convert.ToInt32(UserSettings.RenderWidth / AspectRatio);
 
-      private Rectangle ViewingRect => new(0, 0, Width, Height);
+      private Rectangle ViewingRect => new(0, 0, UserSettings.RenderWidth, RenderHeight);
 
       public readonly RenderWorker RenderWorker = new();
 
@@ -48,21 +49,22 @@ namespace Raytracer
          if ((RenderWorker.IsBusy ? RenderWorker.CurrentRender : LastRender) is not { } frame)
             return;
 
+         Bitmap resized = new(frame, ViewingRect.Width, ViewingRect.Height);
          args.Graphics.InterpolationMode = UserSettings.InterpolationMode;
-         args.Graphics.DrawImage(frame, ViewingRect, 0, 0, frame.Width, frame.Height, GraphicsUnit.Pixel);
+         args.Graphics.DrawImage(resized, ViewingRect, 0, 0, resized.Width, resized.Height, GraphicsUnit.Pixel);
       }
 
       private Camera CreateCamera()
       {
          return new Camera
          (
-            lookFrom: new Vector3(13d, 2d, 3d), // Camera origin
+            lookFrom: new Vector3(13f, 2f, 3f), // Camera origin
             lookAt: Vector3.Zero,                     // Where the camera is looking
-            vup: Vector3.Up,                          // The camera's up (default = global up)
-            verticalFov: 20d,                         // Field of view
+            vup: Vector3.UnitY,                       // The camera's up (default = global up)
+            verticalFov: 20f,                         // Field of view
             aspectRatio: AspectRatio,                 // Aspect ratio
-            aperture: 0.01d,                          // The radius of the camera's aperture (smaller -> less distance blur)
-            focalDistance: 10d                        // The distance at which the camera is in focus
+            aperture: 0.01f,                          // The radius of the camera's aperture (smaller -> less distance blur)
+            focalDistance: 10f                        // The distance at which the camera is in focus
          );
       }
 

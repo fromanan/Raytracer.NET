@@ -6,6 +6,6 @@ namespace Raytracer
     {
         public static readonly Random Random = new();
 
-        public static double RandomDouble() => Random.NextDouble();
+        public static float RandomFloat() => Random.NextSingle();
     }
 }

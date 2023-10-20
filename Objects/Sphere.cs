@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 using Raytracer.Materials;
 
 namespace Raytracer.Objects
@@ -6,31 +7,31 @@ namespace Raytracer.Objects
     public class Sphere : IObject
     {
         public readonly Vector3 Center;
-        public readonly double Radius;
+        public readonly float Radius;
         public readonly IMaterial Material;
 
-        public Sphere(Vector3 center, double radius, IMaterial material)
+        public Sphere(Vector3 center, float radius, IMaterial material)
         {
             Center = center;
             Radius = radius;
             Material = material;
         }
 
-        public Hit? Hit(Ray ray, double minimumDistance, double maximumDistance)
+        public Hit? Hit(Ray ray, float minimumDistance, float maximumDistance)
         {
-            Vector3 offset = ray.Origin.Diff(Center);
+            Vector3 offset = ray.Origin - Center;
 
-            double a = ray.Direction.LengthSquared;
-            double b = offset.Dot(ray.Direction);
-            double c = offset.LengthSquared - Radius * Radius;
+            float a = ray.Direction.LengthSquared();
+            float b = offset.Dot(ray.Direction);
+            float c = offset.LengthSquared() - Radius * Radius;
 
-            double discriminant = b * b - a * c;
-            if (discriminant < 0d)
+            float discriminant = b * b - a * c;
+            if (discriminant < 0)
                 return null;
 
-            double sqrtd = Math.Sqrt(discriminant);
+            float sqrtd = MathF.Sqrt(discriminant);
 
-            double root = (-b - sqrtd) / a;
+            float root = (-b - sqrtd) / a;
             if (root < minimumDistance || root > maximumDistance)
             {
                 root = (-b + sqrtd) / a;
@@ -48,7 +49,7 @@ namespace Raytracer.Objects
                 IsHit = true
             };
             
-            hit.SetFaceNormal(ray, rayAtRoot.Diff(Center).Div(Radius));
+            hit.SetFaceNormal(ray, (rayAtRoot - Center) / Radius);
 
             return hit;
         }

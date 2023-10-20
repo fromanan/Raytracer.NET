@@ -5,11 +5,11 @@ namespace Raytracer
 {
     public class ObjectList : List<IObject>, IObject
     {
-        public Hit Hit(Ray ray, double minimumDistance, double maximumDistance)
+        public Hit Hit(Ray ray, float minimumDistance, float maximumDistance)
         {
             Hit nearestHit = new();
             
-            double closest = maximumDistance;
+            float closest = maximumDistance;
 
             foreach (Hit? hit in this.Select(o => o.Hit(ray, minimumDistance, closest)).Where(hit => hit is { IsHit: true }))
             {

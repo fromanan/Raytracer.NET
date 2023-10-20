@@ -2,10 +2,10 @@
 {
     public interface IObject
     {
-        public const double DEFAULT_MIN = 0.001;
+        public const float DEFAULT_MIN = 0.001f;
         
-        public const double DEFAULT_MAX = double.MaxValue;
+        public const float DEFAULT_MAX = float.MaxValue;
         
-        Hit? Hit(Ray ray, double minimumDistance = DEFAULT_MIN, double maximumDistance = DEFAULT_MAX);
+        Hit? Hit(Ray ray, float minimumDistance = DEFAULT_MIN, float maximumDistance = DEFAULT_MAX);
     }
 }

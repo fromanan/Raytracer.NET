@@ -1,10 +1,12 @@
-﻿namespace Raytracer.Materials
+﻿using System.Numerics;
+
+namespace Raytracer.Materials
 {
     public class Lambertian : IMaterial
     {
-        public readonly Color Color;
+        public readonly Vector3 Color;
 
-        public Lambertian(Color color)
+        public Lambertian(Vector3 color)
         {
             Color = color;
         }
@@ -12,7 +14,7 @@
         // TODO: Implement near zero correction
         public Scattered Scatter(Ray ray, Hit hit)
         {
-            Vector3 direction = hit.Normal.Sum(Vector3.RandomUnit());
+            Vector3 direction = hit.Normal + VectorUtils.RandomUnit();
             
             return new Scattered
             (

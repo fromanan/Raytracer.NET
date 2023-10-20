@@ -1,27 +1,28 @@
 ﻿using System;
+using System.Numerics;
 
 namespace Raytracer.Materials
 {
     public class Dielectric : IMaterial
     {
-        private readonly double _refractionIndex;
+        private readonly float _refractionIndex;
 
-        public Dielectric(double refractionIndex)
+        public Dielectric(float refractionIndex)
         {
             _refractionIndex = refractionIndex;
         }
 
         public Scattered Scatter(Ray ray, Hit hit)
         {
-            double refractionRatio = hit.IsFrontFace ? 1d / _refractionIndex : _refractionIndex;
+            float refractionRatio = hit.IsFrontFace ? 1f / _refractionIndex : _refractionIndex;
 
-            Vector3 unitDirection = ray.Direction.Normalized;
-            double cos = Math.Min(unitDirection.Negate().Dot(hit.Normal), 1d);
-            double sin = Math.Sqrt(1d - cos * cos);
+            Vector3 unitDirection = ray.Direction.Normalized();
+            float cos = MathF.Min(unitDirection.Negate().Dot(hit.Normal), 1f);
+            float sin = MathF.Sqrt(1f - cos * cos);
 
-            bool cannotRefract = refractionRatio * sin > 1d;
+            bool cannotRefract = refractionRatio * sin > 1f;
             Vector3 direction;
-            if (cannotRefract || Reflectance(cos, refractionRatio) > Global.RandomDouble())
+            if (cannotRefract || Reflectance(cos, refractionRatio) > Global.RandomFloat())
             {
                 direction = unitDirection.Reflected(hit.Normal);
             }
@@ -38,11 +39,11 @@ namespace Raytracer.Materials
             );
         }
 
-        private static double Reflectance(double cos, double refIdx)
+        private static float Reflectance(float cos, float refIdx)
         {
-            double r0 = (1d - refIdx) / (1d + refIdx);
+            float r0 = (1f - refIdx) / (1f + refIdx);
             r0 *= r0;
-            return r0 + (1d - r0) * Math.Pow(1d - cos, 5);
+            return r0 + (1f - r0) * MathF.Pow(1f - cos, 5);
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace Raytracer
+﻿using System.Numerics;
+
+namespace Raytracer
 {
     public readonly struct Ray
     {
@@ -11,9 +13,9 @@
             Direction = direction;
         }
 
-        public Vector3 At(double distance)
+        public Vector3 At(float distance)
         {
-            return Origin.Sum(Direction.Mult(distance));
+            return Origin + Direction * distance;
         }
     }
 }

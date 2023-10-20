@@ -2,7 +2,7 @@ using System;
 
 namespace Raytracer
 {
-    public class Vector3
+    /*public class Vector3
     {
         public double X;
         public double Y;
@@ -186,5 +186,5 @@ namespace Raytracer
         public static Vector3 operator +(Vector3 a, Vector3 b) => a.Sum(b);
 
         public static Vector3 operator -(Vector3 a, Vector3 b) => a.Diff(b);
-    }
+    }*/
 }

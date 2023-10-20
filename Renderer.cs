@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.Numerics;
 
 namespace Raytracer
 {
@@ -12,9 +13,9 @@ namespace Raytracer
 
         private static IObject World => Scene.World;
 
-        private static Color RayColorIterative(Ray ray, int reflections)
+        private static Vector3 RayColorIterative(Ray ray, int reflections)
         {
-            Color color = Color.White;
+            Vector3 color = Color.White;
             Hit? hit = World.Hit(ray);
             while (hit is { IsHit: true })
             {
@@ -22,19 +23,19 @@ namespace Raytracer
                 if (reflections <= 0 || !scattered.DidScatter)
                     return Color.Black;
 
-                color = color.Hadamard(scattered.Attenuation);
+                color = color * scattered.Attenuation;
                 ray = scattered.Ray;
                 hit = World.Hit(ray);
                 --reflections;
             }
 
-            double t = 0.5d * (ray.Direction.Normalized.Y + 1d);
-            Color color1 = Color.White; // White
-            Color color2 = new(0.5d, 0.7d, 1d);
-            return color.Hadamard(color1.Mult(1d - t).Sum(color2.Mult(t)));
+            float t = 0.5f * (ray.Direction.Normalized().Y + 1f);
+            Vector3 color1 = Color.White; // White
+            Vector3 color2 = new(0.5f, 0.7f, 1f);
+            return color * (color1 * (1f - t) + (color2 * (t)));
         }
 
-        private static Color RayColor(Ray ray, int reflections)
+        private static Vector3 RayColor(Ray ray, int reflections)
         {
             if (reflections <= 0)
                 return Color.Black;
@@ -44,32 +45,32 @@ namespace Raytracer
             {
                 Scattered scattered = hit.Material.Scatter(ray, hit);
                 return scattered.DidScatter 
-                    ? scattered.Attenuation.Hadamard(RayColor(scattered.Ray, reflections - 1))
+                    ? scattered.Attenuation * RayColor(scattered.Ray, reflections - 1)
                     : Color.Black;
             }
 
-            double t = 0.5d * (ray.Direction.Normalized.Y + 1d);
-            Color color1 = Color.White;
-            Color color2 = new(0.5d, 0.7d, 1d);
-            return color1.Mult(1d - t).Sum(color2.Mult(t));
+            float t = 0.5f * (ray.Direction.Normalized().Y + 1f);
+            Vector3 color1 = Color.White;
+            Vector3 color2 = new(0.5f, 0.7f, 1f);
+            return color1 * (1f - t) + color2 * t;
         }
 
-        public static Color Raycast(Camera camera, Rectangle rect)
+        public static Vector3 Raycast(Camera camera, Rectangle rect)
         {
-            Color color = Color.Black;
+            Vector3 color = Color.Black;
 
             for (int s = 0; s < SamplesPerPixel; ++s)
             {
-                double flippedY = rect.Height - rect.Y - 1;
-                double u = (rect.X + Global.RandomDouble()) / (rect.Width - 1);
-                double v = (flippedY + Global.RandomDouble()) / (rect.Height - 1);
+                float flippedY = rect.Height - rect.Y - 1;
+                float u = (rect.X + Global.RandomFloat()) / (rect.Width - 1);
+                float v = (flippedY + Global.RandomFloat()) / (rect.Height - 1);
 
                 Ray ray = camera.GetRay(u, v);
 
-                color = color.Sum(RayColor(ray, MaxReflections));
+                color += RayColor(ray, MaxReflections);
             }
             
-            return color.Div(SamplesPerPixel).Sqrt() * 255d;
+            return (color / SamplesPerPixel).Sqrt() * 255f;
         }
     }
 }
