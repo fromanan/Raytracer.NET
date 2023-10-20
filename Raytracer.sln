@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Raytracer", "Raytracer.csproj", "{FBC65AE0-1100-4268-83D9-4CA556EE90C5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FBC65AE0-1100-4268-83D9-4CA556EE90C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FBC65AE0-1100-4268-83D9-4CA556EE90C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FBC65AE0-1100-4268-83D9-4CA556EE90C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FBC65AE0-1100-4268-83D9-4CA556EE90C5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
