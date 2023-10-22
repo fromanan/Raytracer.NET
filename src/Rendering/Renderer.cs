@@ -16,8 +16,8 @@ namespace Raytracer.Rendering
         private static Vector3 RayColorIterative(Ray ray, int reflections)
         {
             Vector3 color = Color.White;
-            Hit? hit = World.Hit(ray);
-            while (hit is { IsHit: true })
+            
+            while (World.Hit(ray) is { IsHit: true } hit)
             {
                 Scattered scattered = hit.Material.Scatter(ray, hit);
                 if (reflections <= 0 || !scattered.DidScatter)
@@ -40,8 +40,7 @@ namespace Raytracer.Rendering
             if (reflections <= 0)
                 return Color.Black;
 
-            Hit? hit = World.Hit(ray);
-            if (hit is { IsHit: true })
+            if (World.Hit(ray) is { IsHit: true } hit)
             {
                 Scattered scattered = hit.Material.Scatter(ray, hit);
                 return scattered.DidScatter 
