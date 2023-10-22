@@ -1,6 +1,6 @@
 ﻿using System.Numerics;
 
-namespace Raytracer
+namespace Raytracer.Rendering
 {
     public readonly struct Ray
     {

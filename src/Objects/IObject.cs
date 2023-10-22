@@ -1,4 +1,6 @@
-﻿namespace Raytracer
+﻿using Raytracer.Rendering;
+
+namespace Raytracer
 {
     public interface IObject
     {

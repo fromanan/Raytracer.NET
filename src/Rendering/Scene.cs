@@ -3,7 +3,7 @@ using System.Numerics;
 using Raytracer.Materials;
 using Raytracer.Objects;
 
-namespace Raytracer
+namespace Raytracer.Rendering
 {
     public class Scene
     {

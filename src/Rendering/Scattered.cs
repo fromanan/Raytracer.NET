@@ -1,6 +1,6 @@
 using System.Numerics;
 
-namespace Raytracer
+namespace Raytracer.Rendering
 {
     public record Scattered(Vector3 Attenuation, Ray Ray, bool DidScatter)
     {

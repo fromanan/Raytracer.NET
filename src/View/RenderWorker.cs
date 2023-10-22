@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Drawing;
 using System.Numerics;
+using Raytracer.Rendering;
 
 namespace Raytracer
 {

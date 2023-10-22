@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Numerics;
 using Raytracer.Materials;
+using Raytracer.Rendering;
 
 namespace Raytracer.Objects
 {

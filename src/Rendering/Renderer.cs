@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using System.Numerics;
 
-namespace Raytracer
+namespace Raytracer.Rendering
 {
     public static class Renderer
     {

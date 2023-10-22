@@ -1,7 +1,7 @@
 using System;
 using System.Numerics;
 
-namespace Raytracer
+namespace Raytracer.Rendering
 {
     public class Camera
     {

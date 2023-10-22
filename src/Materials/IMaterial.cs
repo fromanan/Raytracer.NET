@@ -1,4 +1,6 @@
-﻿namespace Raytracer.Materials
+﻿using Raytracer.Rendering;
+
+namespace Raytracer.Materials
 {
     public interface IMaterial
     {

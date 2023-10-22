@@ -1,7 +1,7 @@
 using System.Numerics;
 using Raytracer.Materials;
 
-namespace Raytracer
+namespace Raytracer.Rendering
 {
     public record Hit
     {

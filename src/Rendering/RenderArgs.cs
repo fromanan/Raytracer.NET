@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace Raytracer
+namespace Raytracer.Rendering
 {
     public record RenderArgs(Rectangle ViewingRect, Camera Camera)
     {
