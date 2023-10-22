@@ -19,7 +19,7 @@ namespace Raytracer
       public void UpdateProgress(int progress)
       {
          progressBar.Value = progress;
-         Update();
+         Invalidate();
       }
    }
 }
