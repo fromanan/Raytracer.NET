@@ -23,16 +23,14 @@ namespace Raytracer.Rendering
                 if (reflections <= 0 || !scattered.DidScatter)
                     return Color.Black;
 
-                color = color * scattered.Attenuation;
+                color *= scattered.Attenuation;
                 ray = scattered.Ray;
                 hit = World.Hit(ray);
                 --reflections;
             }
 
-            float t = 0.5f * (ray.Direction.Normalized().Y + 1f);
-            Vector3 color1 = Color.White; // White
-            Vector3 color2 = new(0.5f, 0.7f, 1f);
-            return color * (color1 * (1f - t) + (color2 * (t)));
+            float depth = 0.5f * (ray.Direction.Normalized().Y + 1f);
+            return color * (Color.White * (1f - depth) + new Vector3(0.5f, 0.7f, 1f) * depth);
         }
 
         private static Vector3 RayColor(Ray ray, int reflections)
@@ -48,10 +46,8 @@ namespace Raytracer.Rendering
                     : Color.Black;
             }
 
-            float t = 0.5f * (ray.Direction.Normalized().Y + 1f);
-            Vector3 color1 = Color.White;
-            Vector3 color2 = new(0.5f, 0.7f, 1f);
-            return color1 * (1f - t) + color2 * t;
+            float depth = 0.5f * (ray.Direction.Normalized().Y + 1f);
+            return Color.White * (1f - depth) + new Vector3(0.5f, 0.7f, 1f) * depth;
         }
 
         public static Vector3 Raycast(Camera camera, Rectangle rect)
