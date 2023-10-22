@@ -14,16 +14,16 @@
         <AutoGen>True</AutoGen>
         <DependentUpon>Resources.resx</DependentUpon>
       </Compile>
-      <Compile Update="src\View\ProgressBarWindow.cs">
+      <Compile Update="View\ProgressBarWindow.cs">
         <SubType>Form</SubType>
       </Compile>
-      <Compile Update="src\View\RendererForm.cs">
+      <Compile Update="View\RendererForm.cs">
         <SubType>Form</SubType>
       </Compile>
-      <Compile Update="src\View\RenderWorker.cs">
+      <Compile Update="View\RenderWorker.cs">
         <SubType>Component</SubType>
       </Compile>
-      <Compile Update="src\View\SettingsWindow.cs">
+      <Compile Update="View\SettingsWindow.cs">
         <SubType>Form</SubType>
       </Compile>
     </ItemGroup>
