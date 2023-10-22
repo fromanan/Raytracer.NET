@@ -25,6 +25,15 @@ namespace Raytracer
          samplesPerPixelValue.Maximum = 64;
          samplesPerPixelValue.Minimum = 1;
 
+         focalDistanceValue.Maximum = new decimal(1E6);
+         focalDistanceValue.Minimum = new decimal(1E-6);
+
+         fieldOfViewValue.Maximum = 120;
+         fieldOfViewValue.Minimum = 10;
+
+         apertureValue.Maximum = 10;
+         apertureValue.Minimum = new decimal(1E-6);
+
          bitDepthDropdown.Items.AddRange(new object[]
          {
             PixelFormat.Format24bppRgb,
@@ -44,6 +53,9 @@ namespace Raytracer
          RendererForm.UserSettings.SamplesPerPixel = (int)samplesPerPixelValue.Value;
          RendererForm.UserSettings.MaxReflections = (int)maxReflectionsValue.Value;
          RendererForm.UserSettings.PixelFormat = (PixelFormat)bitDepthDropdown.SelectedItem;
+         RendererForm.UserSettings.FocalDistance = (float)focalDistanceValue.Value;
+         RendererForm.UserSettings.FieldOfView = (float)fieldOfViewValue.Value;
+         RendererForm.UserSettings.Aperture = (float)apertureValue.Value;
       }
 
       private void OnShown(object? sender, EventArgs e)
@@ -52,6 +64,9 @@ namespace Raytracer
          samplesPerPixelValue.Value = Settings.SamplesPerPixel;
          maxReflectionsValue.Value = Settings.MaxReflections;
          bitDepthDropdown.SelectedIndex = bitDepthDropdown.Items.IndexOf(Settings.PixelFormat);
+         focalDistanceValue.Value = new decimal(Settings.FocalDistance);
+         fieldOfViewValue.Value = new decimal(Settings.FieldOfView);
+         apertureValue.Value = new decimal(Settings.Aperture);
       }
    }
 }
