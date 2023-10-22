@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+            
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="FileSaved" xml:space="preserve">
+        <value>File saved successfully!</value>
+    </data>
+    <data name="FileSaveFailed" xml:space="preserve">
+        <value>File failed to save to disk!</value>
+    </data>
+    <data name="FileSaveFailed_Extension" xml:space="preserve">
+        <value>File could not be saved as specified extension!</value>
+    </data>
+    <data name="FileSaveFailed_Generic" xml:space="preserve">
+        <value>File failed to save to disk! ({0})</value>
+    </data>
+    <data name="Title_SaveSuccessful" xml:space="preserve">
+        <value>Save successful</value>
+    </data>
+    <data name="Title_SaveFailed" xml:space="preserve">
+        <value>Save failed</value>
+    </data>
+    <data name="SaveFileFilter" xml:space="preserve">
+        <value>Bitmap Image (.bmp)|*.bmp|Gif Image (.gif)|*.gif |JPEG Image (.jpeg)|*.jpeg |Png Image (.png)|*.png |Tiff Image (.tiff)|*.tiff |Wmf Image (.wmf)|*.wmf</value>
+    </data>
+</root>
