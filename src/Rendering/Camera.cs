@@ -14,10 +14,12 @@ namespace Raytracer.Rendering
         private readonly Vector3 _v;
         private readonly float _lensRadius;
 
+        private const float _TO_RADIANS = MathF.PI / 180f;
+
         public Camera(Vector3 lookFrom, Vector3 lookAt, Vector3 up, float verticalFov, float aspectRatio,
             float aperture, float focalDistance)
         {
-            float theta = verticalFov * MathF.PI / 180f;
+            float theta = verticalFov * _TO_RADIANS;
             float viewportHeight = 2f * MathF.Tan(theta / 2f);
             float viewportWidth = viewportHeight * aspectRatio;
 
