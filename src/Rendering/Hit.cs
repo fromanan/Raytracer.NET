@@ -23,11 +23,11 @@ namespace Raytracer.Rendering
             Normal = IsFrontFace ? normal : normal.Negate();
         }
 
-        public Vector3 Point { get; set; } = Vector3.Zero;
+        public Vector3 Point { get; init; } = Vector3.Zero;
         public Vector3 Normal { get; private set; } = Vector3.Zero;
-        public IMaterial Material { get; set; } = null!;
-        public float Nearest { get; set; }
+        public IMaterial Material { get; init; } = null!;
+        public float Nearest { get; init; }
         public bool IsFrontFace { get; private set; }
-        public bool IsHit { get; set; }
+        public bool IsHit { get; init; }
     }
 }
