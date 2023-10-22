@@ -99,25 +99,25 @@ namespace Raytracer
          {
             LastRender.Save(filename);
             succeeded = File.Exists(filename);
-            message = succeeded ? "File saved successfully!" : "File failed to save to disk!";
+            message = succeeded ? Messages.FileSaved : Messages.FileSaveFailed;
          }
          catch (ExternalException)
          {
-            message = "File could not be saved as specified extension!";
+            message = Messages.FileSaveFailed_Extension;
          }
          catch (Exception exception)
          {
-            message = $"File failed to save to disk! ({exception.Message})";
+            message = string.Format(Messages.FileSaveFailed_Generic, exception.Message);
          }
 
-         MessageBox.Show(message, succeeded ? "Save successful" : "Save failed", MessageBoxButtons.OK,
-            succeeded ? MessageBoxIcon.Information : MessageBoxIcon.Error);
+         MessageBox.Show(message, succeeded ? Messages.Title_SaveSuccessful : Messages.Title_SaveFailed,
+             MessageBoxButtons.OK, succeeded ? MessageBoxIcon.Information : MessageBoxIcon.Error);
       }
 
       private static string? SaveFileToDisk()
       {
          SaveFileDialog dialog = new();
-         dialog.Filter = "Bitmap Image (.bmp)|*.bmp|Gif Image (.gif)|*.gif |JPEG Image (.jpeg)|*.jpeg |Png Image (.png)|*.png |Tiff Image (.tiff)|*.tiff |Wmf Image (.wmf)|*.wmf";
+         dialog.Filter = Messages.SaveFileFilter;
          dialog.DefaultExt = "bmp";
          dialog.ValidateNames = true;
          return dialog.ShowDialog() is DialogResult.OK or DialogResult.Yes ? dialog.FileName : default;
