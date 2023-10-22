@@ -11,6 +11,9 @@ namespace Raytracer
         public int MaxReflections;
         public PixelFormat PixelFormat;
         public InterpolationMode InterpolationMode;
+        public float FocalDistance;
+        public float FieldOfView;
+        public float Aperture;
         
         // ReSharper disable once SwitchExpressionHandlesSomeKnownEnumValuesWithExceptionInDefault
         public byte BitsPerPixel => PixelFormat switch

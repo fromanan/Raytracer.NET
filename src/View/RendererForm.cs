@@ -33,7 +33,10 @@ namespace Raytracer
          SamplesPerPixel = 25,
          MaxReflections = 8,
          PixelFormat = PixelFormat.Format24bppRgb,
-         InterpolationMode = InterpolationMode.NearestNeighbor
+         InterpolationMode = InterpolationMode.NearestNeighbor,
+         FieldOfView = 30f,
+         Aperture = 0.01f,
+         FocalDistance = 10f
       };
 
       public RendererForm()
@@ -59,13 +62,13 @@ namespace Raytracer
       {
          return new Camera
          (
-            lookFrom: new Vector3(13f, 2f, 3f), // Camera origin
-            lookAt: Vector3.Zero,                     // Where the camera is looking
-            vup: Vector3.UnitY,                       // The camera's up (default = global up)
-            verticalFov: 20f,                         // Field of view
-            aspectRatio: AspectRatio,                 // Aspect ratio
-            aperture: 0.01f,                          // The radius of the camera's aperture (smaller -> less distance blur)
-            focalDistance: 10f                        // The distance at which the camera is in focus
+             lookFrom: new Vector3(x: 13f, y: 2f, z: 3f),   // Camera origin
+             lookAt: Vector3.Zero,                          // Where the camera is looking
+             up: Vector3.UnitY,                             // The camera's up (default = global up)
+             verticalFov: UserSettings.FieldOfView,         // Field of view
+             aspectRatio: drawPanel.AspectRatio,            // Aspect ratio
+             aperture: UserSettings.Aperture,               // The radius of the camera's aperture (smaller -> less distance blur)
+             focalDistance: UserSettings.FocalDistance      // The distance at which the camera is in focus
          );
       }
 
