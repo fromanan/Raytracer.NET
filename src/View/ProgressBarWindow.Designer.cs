@@ -41,25 +41,27 @@
          // splitContainer1
          // 
          splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+         splitContainer1.IsSplitterFixed = true;
          splitContainer1.Location = new System.Drawing.Point(0, 0);
+         splitContainer1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
          splitContainer1.Name = "splitContainer1";
          splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
          // 
          // splitContainer1.Panel1
          // 
          splitContainer1.Panel1.Controls.Add(label);
-         splitContainer1.Panel1.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-         splitContainer1.Panel1.Padding = new System.Windows.Forms.Padding(25, 25, 25, 10);
+         splitContainer1.Panel1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+         splitContainer1.Panel1.Padding = new System.Windows.Forms.Padding(29, 33, 29, 13);
          splitContainer1.Panel1.UseWaitCursor = true;
          // 
          // splitContainer1.Panel2
          // 
          splitContainer1.Panel2.Controls.Add(cancelButton);
          splitContainer1.Panel2.Controls.Add(progressBar);
-         splitContainer1.Panel2.Padding = new System.Windows.Forms.Padding(25, 10, 25, 40);
+         splitContainer1.Panel2.Padding = new System.Windows.Forms.Padding(29, 13, 29, 53);
          splitContainer1.Panel2.UseWaitCursor = true;
-         splitContainer1.Size = new System.Drawing.Size(434, 150);
-         splitContainer1.SplitterDistance = 74;
+         splitContainer1.Size = new System.Drawing.Size(496, 200);
+         splitContainer1.SplitterDistance = 100;
          splitContainer1.SplitterWidth = 1;
          splitContainer1.TabIndex = 2;
          splitContainer1.UseWaitCursor = true;
@@ -67,9 +69,9 @@
          // label
          // 
          label.Dock = System.Windows.Forms.DockStyle.Fill;
-         label.Location = new System.Drawing.Point(25, 25);
+         label.Location = new System.Drawing.Point(29, 33);
          label.Name = "label";
-         label.Size = new System.Drawing.Size(384, 39);
+         label.Size = new System.Drawing.Size(438, 54);
          label.TabIndex = 0;
          label.Text = "Render In Progress";
          label.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
@@ -77,9 +79,10 @@
          // 
          // cancelButton
          // 
-         cancelButton.Location = new System.Drawing.Point(284, 38);
+         cancelButton.Location = new System.Drawing.Point(324, 53);
+         cancelButton.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
          cancelButton.Name = "cancelButton";
-         cancelButton.Size = new System.Drawing.Size(125, 25);
+         cancelButton.Size = new System.Drawing.Size(143, 33);
          cancelButton.TabIndex = 1;
          cancelButton.Text = "Cancel";
          cancelButton.UseVisualStyleBackColor = true;
@@ -89,22 +92,25 @@
          // progressBar
          // 
          progressBar.Dock = System.Windows.Forms.DockStyle.Fill;
-         progressBar.Location = new System.Drawing.Point(25, 10);
+         progressBar.Location = new System.Drawing.Point(29, 13);
          progressBar.Margin = new System.Windows.Forms.Padding(0);
          progressBar.Name = "progressBar";
-         progressBar.Size = new System.Drawing.Size(384, 25);
+         progressBar.Size = new System.Drawing.Size(438, 33);
          progressBar.TabIndex = 0;
          progressBar.UseWaitCursor = true;
          // 
          // ProgressBarWindow
          // 
-         AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-         AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+         AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
+         AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
          CancelButton = cancelButton;
-         ClientSize = new System.Drawing.Size(434, 150);
+         ClientSize = new System.Drawing.Size(496, 200);
          Controls.Add(splitContainer1);
+         DoubleBuffered = true;
          FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+         Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
          Name = "ProgressBarWindow";
+         Opacity = 0.9D;
          ShowIcon = false;
          StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
          Text = "Rendering";
