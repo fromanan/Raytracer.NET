@@ -13,24 +13,24 @@ namespace Raytracer
 {
    public partial class RendererForm : Form
    {
-      // [x] Image resolution; higher gives better quality but slower render time
-      // There's no point to it being bigger than the window's resolution 
-      private float AspectRatio => (float)Width / Height;
+      public static RendererForm Instance { get; private set; }
+      
+      private int RenderHeight => Convert.ToInt32(UserSettings.RenderWidth / drawPanel.AspectRatio);
 
-      private int RenderHeight => Convert.ToInt32(UserSettings.RenderWidth / AspectRatio);
+      private Rectangle RenderRect => new(0, 0, UserSettings.RenderWidth, RenderHeight);
 
-      private Rectangle ViewingRect => new(0, 0, UserSettings.RenderWidth, RenderHeight);
+      public Bitmap? CurrentFrame => RenderWorker.IsBusy ? RenderWorker.CurrentRender : LastRender;
 
       public readonly RenderWorker RenderWorker = new();
 
-      public Bitmap? LastRender;
+      private Bitmap? LastRender { get; set; }
 
       private readonly ProgressBarWindow _progressBarWindow = new();
 
       public static UserSettings UserSettings = new()
       {
-         RenderWidth = 400,
-         SamplesPerPixel = 25,
+         RenderWidth = 1280,
+         SamplesPerPixel = 32,
          MaxReflections = 8,
          PixelFormat = PixelFormat.Format24bppRgb,
          InterpolationMode = InterpolationMode.NearestNeighbor,
@@ -41,21 +41,11 @@ namespace Raytracer
 
       public RendererForm()
       {
+         Instance = this;
          InitializeComponent();
          RenderWorker.InitializeWorker();
          RenderWorker.ProgressChanged += OnUpdateProgressBar;
          RenderWorker.RunWorkerCompleted += OnRenderCompleted;
-         SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
-      }
-
-      private void RendererForm_Paint(object sender, PaintEventArgs args)
-      {
-         if ((RenderWorker.IsBusy ? RenderWorker.CurrentRender : LastRender) is not { } frame)
-            return;
-
-         Bitmap resized = new(frame, ViewingRect.Width, ViewingRect.Height);
-         args.Graphics.InterpolationMode = UserSettings.InterpolationMode;
-         args.Graphics.DrawImage(resized, ViewingRect, 0, 0, resized.Width, resized.Height, GraphicsUnit.Pixel);
       }
 
       private Camera CreateCamera()
@@ -77,7 +67,7 @@ namespace Raytracer
          if (RenderWorker.IsBusy)
             return;
 
-         RenderWorker.RunWorkerAsync(new RenderArgs(ViewingRect, CreateCamera()));
+         RenderWorker.RunWorkerAsync(new RenderArgs(RenderRect, CreateCamera()));
 
          if (_progressBarWindow.ShowDialog() is DialogResult.Cancel or DialogResult.Abort)
          {
@@ -120,7 +110,7 @@ namespace Raytracer
          dialog.Filter = Messages.SaveFileFilter;
          dialog.DefaultExt = "bmp";
          dialog.ValidateNames = true;
-         return dialog.ShowDialog() is DialogResult.OK or DialogResult.Yes ? dialog.FileName : default;
+         return dialog.ShowDialog() is DialogResult.OK ? dialog.FileName : default;
       }
 
       private void OptionsToolStripMenuItem_Click(object sender, EventArgs args)
@@ -131,7 +121,7 @@ namespace Raytracer
       private void OnUpdateProgressBar(object? sender, ProgressChangedEventArgs args)
       {
          _progressBarWindow.UpdateProgress(args.ProgressPercentage);
-         Refresh();
+         drawPanel.Invalidate();
       }
 
       private void OnRenderCompleted(object? sender, RunWorkerCompletedEventArgs args)
@@ -141,7 +131,7 @@ namespace Raytracer
          if (_progressBarWindow.Visible)
             _progressBarWindow.Close();
          LastRender = frame;
-         Refresh();
+         drawPanel.Invalidate();
       }
    }
 }
